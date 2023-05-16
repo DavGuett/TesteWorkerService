@@ -16,8 +16,7 @@ try
     .ConfigureServices(services =>
     {
         services.AddHostedService<Worker>();
-    })
-    .Build();
+    }).UseSerilog().Build();
 
     await host.RunAsync();
     return;
