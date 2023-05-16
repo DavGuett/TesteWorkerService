@@ -15,6 +15,11 @@ namespace TesteWorkerService
             Client = new HttpClient();
             return base.StartAsync(cancellationToken);
         }
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            Client.Dispose();
+            return base.StopAsync(cancellationToken);
+        }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -23,14 +28,14 @@ namespace TesteWorkerService
                 var result = await Client.GetAsync("https://www.proa.tec.br");
                 if(result.IsSuccessStatusCode)
                 {
-                    _logger.LogInformation($"Website is up and running. Status code {result.StatusCode}");
+                    _logger.LogInformation($"Website está online. Status code {result.StatusCode}");
                 }
                 else
                 {
-                    _logger.LogError($"Website is down. Status code: {result.StatusCode}");
+                    _logger.LogError($"Website está offline. Status code: {result.StatusCode}");
                 }
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+                _logger.LogInformation("Worker rodando em: {time}", DateTimeOffset.Now);
+                await Task.Delay(5000, stoppingToken);
             }
         }
     }
