@@ -18,6 +18,7 @@ namespace TesteWorkerService
         public override Task StopAsync(CancellationToken cancellationToken)
         {
             Client.Dispose();
+            _logger.LogInformation("Serviço parado");
             return base.StopAsync(cancellationToken);
         }
 
