@@ -1,6 +1,7 @@
 using TesteWorkerService;
 using Serilog;
 using Serilog.Events;
+using Microsoft.Extensions.Hosting;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -13,6 +14,7 @@ try
 {
     Log.Information("Iniciando o serviço");
     IHost host = Host.CreateDefaultBuilder(args)
+     .UseWindowsService()
     .ConfigureServices(services =>
     {
         services.AddHostedService<Worker>();
